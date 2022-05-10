@@ -4,13 +4,13 @@ import renderWithRouter from '../renderWithRouter';
 import { FavoritePokemons } from '../components';
 import data from '../data';
 
-describe('No favorite pokemon found, caso a pessoa não tenha pokémons favoritos', () => {
-  it('Teste se a página contém um heading h2 com o texto About Pokédex', () => {
+describe('Teste do componente <FavoritePokemons.js />', () => {
+  it('Teste se é exibido "No favorite pokemon found", caso não exista favoritos', () => {
     renderWithRouter(<FavoritePokemons pokemons={ [] } />);
     const noFavPoke = screen.getByText(/No favorite pokemon found/);
     expect(noFavPoke).toBeInTheDocument();
   });
-  it('Teste se são exibidos todos os cards de pokémons favoritados.', () => {
+  it('Teste se são exibidos todos os cards de pokémons favoritados', () => {
     renderWithRouter(<FavoritePokemons pokemons={ data } />);
     // console.log(data);
 
