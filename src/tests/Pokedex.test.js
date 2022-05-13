@@ -16,6 +16,9 @@ const arrPokes = [
   /Dragonair/,
   /Pikachu/,
 ];
+const prox = 'Próximo pokémon';
+const poketypebutton = 'pokemon-type-button';
+const testtype = 'data-testid';
 
 describe('Teste o componente <Pokedex.js />', () => {
   it('Teste se a página contém um heading h2 com o texto Encountered pokémons', () => {
@@ -28,7 +31,7 @@ describe('Teste o componente <Pokedex.js />', () => {
     renderWithRouter(<App />);
 
     for (let a = 1; a < arrPokes.length; a += 1) {
-      const nextPokeButton = screen.getByRole('button', { name: 'Próximo pokémon' });
+      const nextPokeButton = screen.getByRole('button', { name: prox });
       expect(nextPokeButton).toBeInTheDocument();
       userEvent.click(nextPokeButton);
 
@@ -56,12 +59,19 @@ describe('Teste o componente <Pokedex.js />', () => {
 
     expect(allTypes).toBeInTheDocument();
     expect(eleType).toBeInTheDocument();
+    expect(eleType).toHaveAttribute(testtype, poketypebutton);
     expect(firType).toBeInTheDocument();
+    expect(firType).toHaveAttribute(testtype, poketypebutton);
     expect(bugType).toBeInTheDocument();
+    expect(bugType).toHaveAttribute(testtype, poketypebutton);
     expect(poiType).toBeInTheDocument();
+    expect(poiType).toHaveAttribute(testtype, poketypebutton);
     expect(psyType).toBeInTheDocument();
+    expect(psyType).toHaveAttribute(testtype, poketypebutton);
     expect(norType).toBeInTheDocument();
+    expect(norType).toHaveAttribute(testtype, poketypebutton);
     expect(draType).toBeInTheDocument();
+    expect(draType).toHaveAttribute(testtype, poketypebutton);
 
     const elePokes = [/Pikachu/];
     const firPokes = [/Charmander/, /Rapidash/];
@@ -84,10 +94,29 @@ describe('Teste o componente <Pokedex.js />', () => {
         const pokemon = screen.getByText(arrPokeTypes[a][b]);
         expect(pokemon).toBeInTheDocument();
 
-        const nextPokeButton = screen.getByRole('button', { name: 'Próximo pokémon' });
+        const allButton = screen.getByRole('button', { name: 'All' });
+        expect(allButton).toBeInTheDocument();
+
+        const nextPokeButton = screen.getByRole('button', { name: prox });
         expect(nextPokeButton).toBeInTheDocument();
         userEvent.click(nextPokeButton);
       }
+    }
+  });
+  it('Teste se a Pokédex contém um botão para resetar o filtro', () => {
+    renderWithRouter(<App />);
+
+    const allButton = screen.getByRole('button', { name: 'All' });
+    expect(allButton).toBeInTheDocument();
+    userEvent.click(allButton);
+
+    for (let a = 1; a < arrPokes.length; a += 1) {
+      const nextPokeButton = screen.getByRole('button', { name: prox });
+      expect(nextPokeButton).toBeInTheDocument();
+      userEvent.click(nextPokeButton);
+
+      const pokemon = screen.getByText(arrPokes[a]);
+      expect(pokemon).toBeInTheDocument();
     }
   });
 });
